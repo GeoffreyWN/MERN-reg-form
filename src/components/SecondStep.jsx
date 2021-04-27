@@ -1,17 +1,29 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
+import { motion } from "framer-motion";
 
-const SecondStep = ({history}) => {
-  const { register, handleSubmit, errors } = useForm();
+
+const SecondStep = ({history, updateUser, user}) => {
+  const { register, handleSubmit, errors } = useForm({
+    defaultValues: {
+        email: user.email,
+        password: user.password
+    }
+});
 
   const onSubmit = (data) => {
     console.log(data);
+    updateUser(data)
     history.push('/third')
   };
   return (
     <Form className="input-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="col-md-6 offset-md-3">
+      <motion.div
+        className="col-md-6 offset-md-3"
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
+        transition={{ stiffness: 150 }} className="col-md-6 offset-md-3">
         <Form.Group controlId="email">
           <Form.Label> Email </Form.Label>
           <Form.Control
@@ -55,7 +67,7 @@ const SecondStep = ({history}) => {
         </Form.Group>
 
         <Button variant="primary" type="submit"> Next </Button>
-      </div>
+      </motion.div>
     </Form>
   );
 };

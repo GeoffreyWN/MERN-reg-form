@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import csc from "country-state-city";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
+import { motion } from "framer-motion";
 
 const ThirdStep = () => {
   const [countries, setCountries] = useState([]);
@@ -83,7 +84,11 @@ const ThirdStep = () => {
 
   return (
     <Form className="input-form" onSubmit={handleSubmit}>
-      <div className="col-md-6 offset-md-3">
+      <motion.div
+        className="col-md-6 offset-md-3"
+        initial={{ x: "-100vw" }}
+        animate={{ x: 0 }}
+        transition={{ stiffness: 150 }} className="col-md-6 offset-md-3">
         <Form.Group controlId="country">
           {isLoading && <p className="loading">Loading COuntries...</p>}
           <Form.Label>Country</Form.Label>
@@ -143,7 +148,7 @@ const ThirdStep = () => {
           </Form.Control>
         </Form.Group>
         <Button variant="primary" type="submit"> Next </Button>
-      </div>
+      </motion.div>
     </Form>
   );
 };
