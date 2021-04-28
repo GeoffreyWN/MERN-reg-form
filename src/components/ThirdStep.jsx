@@ -4,9 +4,9 @@ import csc from "country-state-city";
 import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { motion } from "framer-motion";
+import Swal from 'sweetalert2'
 
-
-const ThirdStep = ({ user }) => {
+const ThirdStep = ({ user, history, resetUser }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -94,9 +94,18 @@ const ThirdStep = ({ user }) => {
         ...user,
         ...updatedData,
       });
+      Swal.fire('Super Awesome', ' Registration successful! ', 'success').then( result => {if ( result.isConfirmed || result.isDismissed ) {
+        resetUser()
+        history.push('/')
+      }})
     } catch (error) {
       if (error.response) {
-        console.log("error occurred", error.response.data);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.response.data.msg
+        })
+        console.log("error occurred", error.response.data.msg);
       }
     }
   };
@@ -108,7 +117,6 @@ const ThirdStep = ({ user }) => {
         initial={{ x: "-100vw" }}
         animate={{ x: 0 }}
         transition={{ stiffness: 150 }}
-        className="col-md-6 offset-md-3"
       >
         <Form.Group controlId="country">
           {isLoading && <p className="loading">Loading COuntries...</p>}

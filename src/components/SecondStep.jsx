@@ -48,7 +48,7 @@ const SecondStep = ({history, updateUser, user}) => {
         <Form.Group controlId="password">
           <Form.Label> Password </Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             name="password"
             placeholder="Choose Password"
             autoComplete="off"
