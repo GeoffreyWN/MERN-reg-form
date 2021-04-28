@@ -3,12 +3,12 @@ A simple registration form that leverages the MERN Stack
 
 ## Getting Started
 
-clone the repo
-cd into repo
-npm install
-npm run build
-cd into server folder
-node index.js
+1. clone the repo
+2. cd into repo
+3. npm install
+4. npm run build
+5. cd into server folder
+6. node index.js
 
 Open [http://localhost:3030](http://localhost:3030) to view the app in the browser.
 
