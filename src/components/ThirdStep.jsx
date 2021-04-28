@@ -5,7 +5,8 @@ import axios from "axios";
 import { BASE_API_URL } from "../utils/constants";
 import { motion } from "framer-motion";
 
-const ThirdStep = () => {
+
+const ThirdStep = ({ user }) => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -80,6 +81,24 @@ const ThirdStep = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const updatedData = {
+        country: countries.find(
+          (country) => country.isoCode === selectedCountry
+        )?.name,
+        state:
+          states.find((state) => state.isoCode === selectedState)?.name || "",
+        city: selectedCity,
+      };
+      await axios.post(`${BASE_API_URL}/api/v1/user/register`, {
+        ...user,
+        ...updatedData,
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log("error occurred", error.response.data);
+      }
+    }
   };
 
   return (
@@ -88,7 +107,9 @@ const ThirdStep = () => {
         className="col-md-6 offset-md-3"
         initial={{ x: "-100vw" }}
         animate={{ x: 0 }}
-        transition={{ stiffness: 150 }} className="col-md-6 offset-md-3">
+        transition={{ stiffness: 150 }}
+        className="col-md-6 offset-md-3"
+      >
         <Form.Group controlId="country">
           {isLoading && <p className="loading">Loading COuntries...</p>}
           <Form.Label>Country</Form.Label>
@@ -147,7 +168,10 @@ const ThirdStep = () => {
             )}
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit"> Next </Button>
+        <Button variant="primary" type="submit">
+          {" "}
+          Next{" "}
+        </Button>
       </motion.div>
     </Form>
   );
